@@ -52,3 +52,11 @@ export const getUserFriends = (
           v: vkApiV,
         },
       });
+export const getPhotosUploadServer = (token: string) =>
+  vkBridge.send("VKWebAppCallAPIMethod", {
+    method: "photos.getUploadServer",
+    params: {
+      access_token: token,
+      v: vkApiV,
+    },
+  });
