@@ -1,6 +1,6 @@
 import { createEffect } from "effector";
 import { USER_SCOPE } from "../constants";
-import { getUserToken } from "../vk-bridge/user";
+import { getUserData, getUserToken } from "../vk-bridge/user";
 
 export const getUserTokenFX = createEffect({
   handler: async () => {
@@ -8,4 +8,9 @@ export const getUserTokenFX = createEffect({
     return { token: access_token, scope };
   },
   name: "getUserTokenFX",
+});
+
+export const getUserDataFX = createEffect(async () => {
+  const user = await getUserData();
+  return user;
 });

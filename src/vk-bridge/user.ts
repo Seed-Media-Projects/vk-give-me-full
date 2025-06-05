@@ -60,3 +60,12 @@ export const getPhotosUploadServer = (token: string) =>
       v: vkApiV,
     },
   });
+export const getAlbums = (token: string, userId: number) =>
+  vkBridge.send("VKWebAppCallAPIMethod", {
+    method: "photos.getAlbums",
+    params: {
+      access_token: token,
+      v: vkApiV,
+      owner_id: userId,
+    },
+  });
