@@ -2,6 +2,7 @@ import { type UserInfo } from "@vkontakte/vk-bridge";
 import { vkBridge } from "./instance";
 import { appId, isDev, vkApiV } from "../constants";
 import { getSearchParams } from "../data/searchParams";
+import { makeFileFromLocalAsset, uploadFiles } from "../data/upload";
 
 export const getUserData = () =>
   isDev
@@ -52,7 +53,16 @@ export const getUserFriends = (
           v: vkApiV,
         },
       });
-export const getPhotosUploadServer = (token: string, albumId: number) =>
+export const getPhotosUploadServer = (
+  token: string,
+  albumId: number
+): Promise<{
+  response: {
+    album_id: number;
+    upload_url: string;
+    user_id: number;
+  };
+}> =>
   vkBridge.send("VKWebAppCallAPIMethod", {
     method: "photos.getUploadServer",
     params: {
@@ -108,9 +118,17 @@ export const wallPost = async ({
     albumId = albums.response.items[0].id;
   }
 
-  const data = await getPhotosUploadServer(token, albumId);
+  const uploadData = await getPhotosUploadServer(token, albumId);
 
-  console.debug("Wall post upload server", data);
+  console.debug("Wall post upload server", uploadData);
+
+  const fromAssetToFile = await makeFileFromLocalAsset();
+  const uploadedFilesData = await uploadFiles(
+    [fromAssetToFile],
+    uploadData.response.upload_url
+  );
+
+  console.debug("Wall post uploaded files data", uploadedFilesData);
 
   return albumId;
 };
