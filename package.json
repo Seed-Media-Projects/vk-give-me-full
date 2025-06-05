@@ -3,15 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": ".",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build --base=/vk-give-me-full/",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "tsc -b && vite build",
+    "deploy": "vk-miniapps-deploy"
   },
   "dependencies": {
     "@vkontakte/vk-bridge": "^2.15.7",
+    "@vkontakte/vk-miniapps-deploy": "^1.0.0",
     "axios": "^1.9.0",
+    "dev": "^0.1.3",
     "effector": "^23.3.0",
     "effector-react": "^23.3.0",
     "react": "^19.1.0",

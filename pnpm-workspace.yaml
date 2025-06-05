@@ -1,3 +1,5 @@
 onlyBuiltDependencies:
   - '@swc/core'
+  - '@vkontakte/vk-miniapps-deploy'
   - esbuild
+  - inotify
