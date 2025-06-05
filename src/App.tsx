@@ -5,7 +5,7 @@ import { USER_SCOPE } from "./constants";
 import { getUserTokenFX } from "./data/effects.config";
 import { $config } from "./data/store.config";
 import { selectRandom } from "./utils/random";
-import { getAlbums } from "./vk-bridge/user";
+import { wallPost } from "./vk-bridge/user";
 
 function App() {
   const { givenScope, token, user } = useUnit($config);
@@ -14,7 +14,7 @@ function App() {
     if (givenScope && givenScope !== USER_SCOPE) {
       getUserTokenFX();
     } else if (givenScope === USER_SCOPE && token && user) {
-      getAlbums(token, user.id).then(console.debug);
+      wallPost({ token, userId: user.id });
     }
   }, [givenScope, token, user]);
 

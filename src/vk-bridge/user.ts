@@ -60,7 +60,10 @@ export const getPhotosUploadServer = (token: string) =>
       v: vkApiV,
     },
   });
-export const getAlbums = (token: string, userId: number) =>
+export const getAlbums = (
+  token: string,
+  userId: number
+): Promise<{ response: { items: { id: number }[] } }> =>
   vkBridge.send("VKWebAppCallAPIMethod", {
     method: "photos.getAlbums",
     params: {
@@ -69,3 +72,36 @@ export const getAlbums = (token: string, userId: number) =>
       owner_id: userId,
     },
   });
+
+export const createAlbum = (token: string, userId: number) =>
+  vkBridge.send("VKWebAppCallAPIMethod", {
+    method: "photos.createAlbum",
+    params: {
+      access_token: token,
+      v: vkApiV,
+      owner_id: userId,
+      title: "Auf",
+    },
+  });
+
+export const wallPost = async ({
+  token,
+  userId,
+}: {
+  token: string;
+  userId: number;
+}) => {
+  console.log("Wall post get albums");
+  const albums = await getAlbums(token, userId);
+  let albumId = 0;
+  if (!albums.response.items.length) {
+    console.log("Wall post no albums, create one");
+
+    const { response } = await createAlbum(token, userId);
+    console.debug("created album", response);
+  } else {
+    albumId = albums.response.items[0].id;
+  }
+
+  return albumId;
+};
