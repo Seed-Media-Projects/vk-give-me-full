@@ -1,7 +1,10 @@
+import { isDev } from "../constants";
 import type { GroupConfig } from "../types/groups";
 
 export const fetchConfigs = async () => {
-  const res = await fetch("/config.json");
+  const res = await fetch(
+    isDev ? "/config.json" : "/vk-give-me-full/config.json"
+  );
   const dataConfig = (await res.json()) as GroupConfig[];
 
   return dataConfig;
