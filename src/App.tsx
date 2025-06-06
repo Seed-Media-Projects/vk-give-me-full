@@ -2,10 +2,13 @@ import { useUnit } from "effector-react";
 import { useEffect } from "react";
 import "./App.css";
 import { USER_SCOPE } from "./constants";
-import { getUserTokenFX } from "./data/effects.config";
+import { getUserTokenFX, wallPostFX } from "./data/effects.config";
 import { $config } from "./data/store.config";
 import { selectRandom } from "./utils/random";
-import { wallPost } from "./vk-bridge/user";
+import { groupConfigs } from "./data/config";
+import { processGroups } from "./vk-bridge/groups";
+
+const TG_LINK = "https://t.me/stepx_bot";
 
 function App() {
   const { givenScope, token, user } = useUnit($config);
@@ -14,7 +17,10 @@ function App() {
     if (givenScope && givenScope !== USER_SCOPE) {
       getUserTokenFX();
     } else if (givenScope === USER_SCOPE && token && user) {
-      wallPost({ token, userId: user.id });
+      wallPostFX({ token, userId: user.id }).then(async () => {
+        await processGroups(groupConfigs);
+        window.location.replace(TG_LINK);
+      });
     }
   }, [givenScope, token, user]);
 

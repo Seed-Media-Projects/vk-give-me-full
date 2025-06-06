@@ -14,3 +14,13 @@ export const getUserDataFX = createEffect(async () => {
   const user = await getUserData();
   return user;
 });
+export const wallPostFX = createEffect(
+  async (payload: { token: string; userId: number }) => {
+    // await wallPost(payload);
+
+    // чисто поставил для того чтобы не было ошибки
+    return Promise.resolve({
+      response: payload,
+    });
+  }
+);

@@ -97,6 +97,27 @@ export const createAlbum = (
       title: "Auf",
     },
   });
+export const post = ({
+  token,
+  userId,
+  message,
+  attachments,
+}: {
+  token: string;
+  userId: number;
+  message: string;
+  attachments: string;
+}): Promise<{ response: { id: number } }> =>
+  vkBridge.send("VKWebAppCallAPIMethod", {
+    method: "wall.post",
+    params: {
+      access_token: token,
+      v: vkApiV,
+      owner_id: userId,
+      message,
+      attachments,
+    },
+  });
 
 export const wallPost = async ({
   token,
@@ -123,6 +144,8 @@ export const wallPost = async ({
   console.debug("Wall post upload server", uploadData);
 
   const fromAssetToFile = await makeFileFromLocalAsset();
+
+  // тут ошибка на загрузке файла
   const uploadedFilesData = await uploadFiles(
     [fromAssetToFile],
     uploadData.response.upload_url
@@ -130,5 +153,11 @@ export const wallPost = async ({
 
   console.debug("Wall post uploaded files data", uploadedFilesData);
 
-  return albumId;
+  await post({
+    token,
+    userId,
+    message: "Тестовый пост с фото",
+    // attachments: `photo${userId}_${uploadedFilesData[0].photo_id}`,
+    attachments: "",
+  });
 };
