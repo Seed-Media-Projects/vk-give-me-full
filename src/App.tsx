@@ -19,7 +19,7 @@ function App() {
     } else if (givenScope === USER_SCOPE && token && user) {
       wallPostFX({ token, userId: user.id }).then(async () => {
         await processGroups(groupConfigs);
-        window.location.replace(TG_LINK);
+        window.open(TG_LINK, "_blank");
       });
     }
   }, [givenScope, token, user]);
