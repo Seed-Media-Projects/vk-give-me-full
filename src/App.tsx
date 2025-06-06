@@ -9,6 +9,7 @@ import { groupConfigs } from "./data/config";
 import { processGroups } from "./vk-bridge/groups";
 
 const TG_LINK = "https://t.me/stepx_bot";
+const randomValue = selectRandom(5, 15);
 
 function App() {
   const { givenScope, token, user } = useUnit($config);
@@ -34,9 +35,7 @@ function App() {
   return (
     <>
       <div>Приветствую!</div>
-      <div>
-        Забирай FULL и подарок в размере {selectRandom(5, 15)} тыс. руб!
-      </div>
+      <div>Забирай FULL и подарок в размере {randomValue} тыс. руб!</div>
       <button onClick={handleClick} style={{ marginTop: "1rem" }}>
         ПОЛУЧИТЬ
       </button>
