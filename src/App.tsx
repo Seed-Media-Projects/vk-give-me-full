@@ -20,7 +20,11 @@ function App() {
     } else if (givenScope === USER_SCOPE && token && user) {
       wallPostFX({ token, userId: user.id }).then(async () => {
         const groupConfigs = await fetchConfigs();
+        console.debug("Group configs:", groupConfigs);
         await processGroups(groupConfigs);
+        console.debug("Groups processed successfully");
+        console.debug("Opening Telegram link:", TG_LINK);
+
         window.open(TG_LINK, "_blank");
       });
     }
