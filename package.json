@@ -6,7 +6,7 @@
   "homepage": ".",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build --base=/vk-give-me-full/",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "tsc -b && vite build",

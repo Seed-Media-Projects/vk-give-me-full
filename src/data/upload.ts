@@ -1,5 +1,5 @@
 import axios from "axios";
-import imageUrl from "../assets/bonus.png";
+import imageUrl from "../assets/bonus.jpg";
 
 export const uploadFiles = async (
   files: (File | null)[],
